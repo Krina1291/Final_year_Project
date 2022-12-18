@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
-import { AiOutlineClose } from "react-icons/ai";
-
+import { AiOutlineClose, AiFillPlayCircle } from "react-icons/ai";
 import logo from "../../images/logo.png";
+import { TransactionContext } from "../context/TransactionContext";
 
 const NavBarItem = ({ title, classprops }) => (
   <li className={`mx-4 cursor-pointer ${classprops}`}>{title}</li>
 );
 
 const Navbar = () => {
+  const { currentAccount, connectWallet } = useContext(TransactionContext);
+
   const [toggleMenu, setToggleMenu] = React.useState(false);
 
   return (
@@ -22,9 +24,20 @@ const Navbar = () => {
           <NavBarItem key={item + index} title={item} />
         ))}
 
-        <li className="bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]">
-          Login
-        </li>
+        {!currentAccount && (
+          // <li className="bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]">
+          <button
+            type="button"
+            onClick={connectWallet}
+            className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
+          >
+            <AiFillPlayCircle className="text-white mr-2" />
+            <p className="text-white text-base font-semibold">
+              Connect Smart Meter
+            </p>
+          </button>
+          // </li>
+        )}
       </ul>
 
       <div className="flex relative">

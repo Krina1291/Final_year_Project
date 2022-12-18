@@ -27,7 +27,53 @@ export const TransactionsProvider = ({ children }) => {
     localStorage.getItem("transactionCount")
   );
   const [transactions, setTransactions] = useState([]);
-  const [availableOptions, setAvailableOptions] = useState();
+
+  const buyPower = async ({ receiverAddress, amountOfPower, pricePerKW }) => {
+    try {
+      if (ethereum) {
+        setIsLoading(true);
+        const transactionsContract = createEthereumContract();
+
+        const parsedAmount = ethers.utils.parseEther(
+          amountOfPower * pricePerKW
+        );
+
+        await ethereum.request({
+          method: "eth_sendTransaction",
+          params: [
+            {
+              from: currentAccount,
+              to: receiverAddress,
+              gas: "0x5208",
+              value: parsedAmount._hex,
+            },
+          ],
+        });
+
+        const transactionHash = await transactionsContract.addToBlockchain(
+          receiverAddress,
+          amountOfPower,
+          pricePerKW,
+          parsedAmount
+        );
+
+        await transactionHash.wait();
+
+        const transactionsCount =
+          await transactionsContract.getTransactionCount();
+
+        setTransactionCount(transactionsCount.toNumber());
+        setIsLoading(false);
+        window.location.reload();
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+
+      throw new Error("No ethereum object");
+    }
+  };
 
   // done
   const checkIfWalletIsConnect = async () => {
@@ -39,7 +85,7 @@ export const TransactionsProvider = ({ children }) => {
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
 
-        getAvailableOptions();
+        await getAvailableOptions();
       } else {
         console.log("No accounts found");
       }
@@ -111,8 +157,7 @@ export const TransactionsProvider = ({ children }) => {
             timeToStart,
           })
         );
-
-        setAvailableOptions(structuredTransactions);
+        return structuredTransactions;
       } else {
         console.log("Ethereum is not present");
       }
@@ -249,7 +294,7 @@ export const TransactionsProvider = ({ children }) => {
       value={{
         addToAvailableOptions,
         getAvailableOptions,
-        availableOptions,
+        buyPower,
 
         transactionCount,
         connectWallet,

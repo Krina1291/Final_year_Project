@@ -4,8 +4,17 @@ pragma solidity ^0.8.7;
 import "hardhat/console.sol";
 
 contract Transactions {
+    uint public id;
+
+    function getId() public returns (uint) {
+        return id += 1;
+    }
+
     // PLACE ENERGY UP FOR SALE IN THE AVAILABEL OPTIONS
+    uint256 availableOptionsCount;
+
     struct AvailableOptionStruct {
+        uint id;
         address sender;
         string powerSource;
         string amountOfPower;
@@ -24,8 +33,10 @@ contract Transactions {
         string memory duration, // Duration of Power Suppply
         string memory timeToStart // Time of supply
     ) public {
+        getId();
         availableOptions.push(
             AvailableOptionStruct(
+                id,
                 msg.sender,
                 powerSource,
                 amountOfPower,
@@ -48,65 +59,37 @@ contract Transactions {
     /////////////// BUY //////////////
     //////////////////////////////////
     uint256 transactionCount;
-    event Transfer(
-        address sender,
-        address receiverAddress,
-        uint amountOfPower,
-        uint pricePerKW,
-        string duration,
-        string timeToStart
-    );
+
+    event Transfer(address sender, address receiverAddress, uint parsedAmount);
 
     struct TransferStruct {
         address sender;
         address receiver;
         uint amountOfPower;
         uint pricePerKW;
-        string duration;
-        string timeToStart;
+        uint parsedAmount;
     }
 
     TransferStruct[] transactions;
 
-    //  SEND ENERGY
+    //  BUY ENERGY
     function addToBlockchain(
         address receiverAddress, // Address of the buyer
         uint amountOfPower, // Amount of Power in KW
         uint pricePerKW, // Price of Power
-        string memory duration, // Duration of Power Suppply
-        string memory timeToStart // Time of supply
+        uint parsedAmount
     ) public {
-        transactionCount += 1; // Increment the transaction count
-
-        // Add transaction to the list of other transactions
+        transactionCount += 1;
         transactions.push(
             TransferStruct(
                 msg.sender,
                 receiverAddress,
                 amountOfPower,
                 pricePerKW,
-                duration,
-                timeToStart
+                parsedAmount
             )
         );
-    }
-
-    // COMMUNITY MANGER TO APPROVE TRANSACTION
-    function approveTransaction(
-        address receiverAddress, // Address of the Buyer
-        uint amountOfPower, // Address of the Seller
-        uint pricePerKW, // Price of Power
-        string memory duration, // Duration of Power Suppply
-        string memory timeToStart // Time of supply
-    ) public {
-        emit Transfer(
-            msg.sender,
-            receiverAddress,
-            amountOfPower * pricePerKW,
-            pricePerKW,
-            duration,
-            timeToStart
-        );
+        emit Transfer(msg.sender, receiverAddress, parsedAmount);
     }
 
     function getAllTransactions()
@@ -120,4 +103,16 @@ contract Transactions {
     function getTransactionCount() public view returns (uint256) {
         return transactionCount;
     }
+
+    /////////////////////////////////////////////////////
+    /////////////////// APPROVE /////////////////////////
+    /////////////////////////////////////////////////////
+
+    // COMMUNITY MANGER TO APPROVE TRANSACTION
+    // function approveTransaction(
+    //     address receiverAddress,
+    //     uint parsedAmount
+    // ) public {
+    //     emit Transfer(msg.sender, receiverAddress, parsedAmount);
+    // }
 }

@@ -10,24 +10,6 @@ import { Loader } from ".";
 const companyCommonStyles =
   "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
 
-const Input = ({
-  placeholder,
-  name,
-  type,
-  value,
-  handleAddToAvailablePowerChange,
-}) => (
-  <input
-    placeholder={placeholder}
-    type={type}
-    required
-    step="0.0001"
-    value={value}
-    onChange={(e) => handleAddToAvailablePowerChange(e, name)}
-    className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
-  />
-);
-
 const Welcome = () => {
   const {
     currentAccount,
@@ -35,6 +17,7 @@ const Welcome = () => {
     getAvailableOptions,
     addToAvailableOptions,
     isLoading,
+    buyPower,
   } = useContext(TransactionContext);
 
   const [availablePower, setAvailablePower] = useState({
@@ -44,6 +27,18 @@ const Welcome = () => {
     duration: "",
     timeToStart: "",
   });
+
+  const [buyAvailablePower, setBuyAvailablePower] = useState({
+    receiverAddress: "",
+    amountOfPower: "",
+    id: "",
+  });
+
+  const handleBuyAvailablePowerChange = (e) =>
+    setBuyAvailablePower((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
 
   const handleAddToAvailablePowerChange = (e) =>
     setAvailablePower((prevState) => ({
@@ -66,6 +61,21 @@ const Welcome = () => {
     });
 
     await getAvailableOptions();
+  };
+
+  const handleBuyPower = async (e) => {
+    e.preventDefault();
+    const { receiverAddress, amountOfPower, id } = buyAvailablePower;
+    const availableOptions = await getAvailableOptions();
+    console.log(availableOptions);
+    const available = availableOptions?.find((option) => option.id === id);
+    console.log(available);
+
+    // await buyPower({
+    //   receiverAddress,
+    //   amountOfPower,
+    //   pricePerKW: available.pricePerKW,
+    // });
   };
 
   return (
@@ -197,21 +207,31 @@ const Welcome = () => {
               )}
             </form>
 
-            <form className="p-5 sm:w-94 w-full flex flex-col justify-start items-center blue-glassmorphism">
+            <form
+              onSubmit={handleBuyPower}
+              className="p-5 sm:w-94 w-full flex flex-col justify-start items-center blue-glassmorphism"
+            >
               <input
-                required
                 placeholder="ID"
-                name="ID"
+                name="id"
                 type="text"
-                onChange={(e) => handleAddToAvailablePowerChange(e)}
+                onChange={(e) => handleBuyAvailablePowerChange(e)}
                 className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
               />
+
               <input
                 placeholder="kW Power"
-                name="KW Power"
+                name="amountOfPower"
                 type="number"
-                required
-                onChange={(e) => handleAddToAvailablePowerChange(e)}
+                onChange={(e) => handleBuyAvailablePowerChange(e)}
+                className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+              />
+
+              <input
+                placeholder="Address To"
+                name="receiverAddress"
+                type="text"
+                onChange={(e) => handleBuyAvailablePowerChange(e)}
                 className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
               />
 
@@ -222,7 +242,7 @@ const Welcome = () => {
               ) : (
                 <button
                   type="submit"
-                  // onClick={handleSubmit}
+                  onClick={handleBuyPower}
                   className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
                 >
                   Purchase Energy
