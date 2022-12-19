@@ -18,6 +18,7 @@ const Welcome = () => {
     addToAvailableOptions,
     isLoading,
     buyPower,
+    getAllTransactions,
   } = useContext(TransactionContext);
 
   const [availablePower, setAvailablePower] = useState({
@@ -60,7 +61,9 @@ const Welcome = () => {
       timeToStart,
     });
 
-    await getAvailableOptions();
+    const greg = await getAvailableOptions();
+
+    setAvailableOptions(greg);
   };
 
   const handleBuyPower = async (e) => {
@@ -68,14 +71,13 @@ const Welcome = () => {
     const { receiverAddress, amountOfPower, id } = buyAvailablePower;
     const availableOptions = await getAvailableOptions();
     console.log(availableOptions);
-    const available = availableOptions?.find((option) => option.id === id);
-    console.log(available);
+    const available = availableOptions?.find((option) => option.id._hex === id);
 
-    // await buyPower({
-    //   receiverAddress,
-    //   amountOfPower,
-    //   pricePerKW: available.pricePerKW,
-    // });
+    await buyPower({
+      receiverAddress,
+      amountOfPower: amountOfPower,
+      pricePerKW: available.pricePerKW,
+    });
   };
 
   return (
@@ -195,7 +197,9 @@ const Welcome = () => {
               <div className="h-[1px] w-full bg-gray-400 my-2" />
 
               {isLoading ? (
-                <Loader />
+                <h6 className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer">
+                  Loading
+                </h6>
               ) : (
                 <button
                   type="submit"
@@ -238,7 +242,9 @@ const Welcome = () => {
               <div className="h-[1px] w-full bg-gray-400 my-2" />
 
               {isLoading ? (
-                <Loader />
+                <h6 className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer">
+                  Loading
+                </h6>
               ) : (
                 <button
                   type="submit"

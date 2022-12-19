@@ -22,11 +22,8 @@ const createEthereumContract = () => {
 export const TransactionsProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const [transactionCount, setTransactionCount] = useState(
-    localStorage.getItem("transactionCount")
-  );
-  const [transactions, setTransactions] = useState([]);
+  const [availableOptions, setAvailableOptions] = useState();
+  const [allTransactions, setAllTransactions] = useState();
 
   const buyPower = async ({ receiverAddress, amountOfPower, pricePerKW }) => {
     try {
@@ -35,7 +32,7 @@ export const TransactionsProvider = ({ children }) => {
         const transactionsContract = createEthereumContract();
 
         const parsedAmount = ethers.utils.parseEther(
-          amountOfPower * pricePerKW
+          `${amountOfPower * pricePerKW}`
         );
 
         await ethereum.request({
@@ -59,10 +56,6 @@ export const TransactionsProvider = ({ children }) => {
 
         await transactionHash.wait();
 
-        const transactionsCount =
-          await transactionsContract.getTransactionCount();
-
-        setTransactionCount(transactionsCount.toNumber());
         setIsLoading(false);
         window.location.reload();
       } else {
@@ -71,7 +64,7 @@ export const TransactionsProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
 
-      throw new Error("No ethereum object");
+      throw new Error(error);
     }
   };
 
@@ -132,6 +125,33 @@ export const TransactionsProvider = ({ children }) => {
   };
 
   // DONE
+  const getAllTransactions = async () => {
+    try {
+      if (ethereum) {
+        const transactionsContract = createEthereumContract();
+
+        const availableTransactions =
+          await transactionsContract.getAllTransactions();
+
+        const structuredTransactions = availableTransactions.map(
+          ({ sender, receiver, amountOfPower, pricePerKW, parsedAmount }) => ({
+            sender,
+            receiver,
+            amountOfPower: parseInt(amountOfPower._hex, 16),
+            pricePerKW,
+            parsedAmount: parseInt(parsedAmount._hex, 16),
+          })
+        );
+        setAllTransactions(structuredTransactions);
+        return structuredTransactions;
+      } else {
+        console.log("Ethereum is not present");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // DONE
   const getAvailableOptions = async () => {
     try {
       if (ethereum) {
@@ -142,6 +162,7 @@ export const TransactionsProvider = ({ children }) => {
 
         const structuredTransactions = availableTransactions.map(
           ({
+            id,
             sender,
             powerSource,
             amountOfPower,
@@ -149,6 +170,7 @@ export const TransactionsProvider = ({ children }) => {
             duration,
             timeToStart,
           }) => ({
+            id,
             sender,
             powerSource,
             amountOfPower,
@@ -157,6 +179,7 @@ export const TransactionsProvider = ({ children }) => {
             timeToStart,
           })
         );
+        setAvailableOptions(structuredTransactions);
         return structuredTransactions;
       } else {
         console.log("Ethereum is not present");
@@ -287,7 +310,9 @@ export const TransactionsProvider = ({ children }) => {
   useEffect(() => {
     checkIfWalletIsConnect();
     checkIfTransactionsExists();
-  }, [transactionCount]);
+    getAllTransactions();
+    getAvailableOptions();
+  }, [availableOptions, allTransactions]);
 
   return (
     <TransactionContext.Provider
@@ -295,12 +320,12 @@ export const TransactionsProvider = ({ children }) => {
         addToAvailableOptions,
         getAvailableOptions,
         buyPower,
-
-        transactionCount,
+        getAllTransactions,
         connectWallet,
-        transactions,
         currentAccount,
         isLoading,
+        availableOptions,
+        allTransactions,
       }}
     >
       {children}

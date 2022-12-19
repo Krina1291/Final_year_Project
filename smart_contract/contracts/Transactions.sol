@@ -4,9 +4,9 @@ pragma solidity ^0.8.7;
 import "hardhat/console.sol";
 
 contract Transactions {
-    uint public id;
+    uint256 public id = 1;
 
-    function getId() public returns (uint) {
+    function getId() public returns (uint256) {
         return id += 1;
     }
 
@@ -14,7 +14,7 @@ contract Transactions {
     uint256 availableOptionsCount;
 
     struct AvailableOptionStruct {
-        uint id;
+        uint256 id;
         address sender;
         string powerSource;
         string amountOfPower;
@@ -66,7 +66,7 @@ contract Transactions {
         address sender;
         address receiver;
         uint amountOfPower;
-        uint pricePerKW;
+        string pricePerKW;
         uint parsedAmount;
     }
 
@@ -76,7 +76,7 @@ contract Transactions {
     function addToBlockchain(
         address receiverAddress, // Address of the buyer
         uint amountOfPower, // Amount of Power in KW
-        uint pricePerKW, // Price of Power
+        string memory pricePerKW, // Price of Power
         uint parsedAmount
     ) public {
         transactionCount += 1;

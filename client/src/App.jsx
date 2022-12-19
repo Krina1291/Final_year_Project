@@ -1,4 +1,5 @@
 import { Navbar, Welcome, Footer, Services, Transactions } from "./components";
+import CustomizedTables from "./components/AvailableOptions";
 
 const App = () => (
   <div className="min-h-screen">
@@ -7,7 +8,8 @@ const App = () => (
       <Welcome />
     </div>
     <Services />
-    <Transactions />
+    {/* <Transactions /> */}
+    <CustomizedTables />
     <Footer />
   </div>
 );
