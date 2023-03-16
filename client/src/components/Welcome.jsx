@@ -85,12 +85,12 @@ const Welcome = () => {
       <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">
         <div className="flex flex-1 justify-start items-start flex-col mf:mr-10">
           <h1 className="text-3xl sm:text-5xl text-white text-gradient py-1">
-            Send Energy <br /> across the world
+            Send & Buy Energy <br /> across the world
           </h1>
-          <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">
+        {/*   <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">
             Explore the Decentralized Energy World. Buy and sell Decentralized
             energy easily on Krypt.
-          </p>
+          </p> */}
           {!currentAccount && (
             <button
               type="button"
@@ -99,12 +99,12 @@ const Welcome = () => {
             >
               <AiFillPlayCircle className="text-white mr-2" />
               <p className="text-white text-base font-semibold">
-                Connect Smart Meter
+                Connect Wallet
               </p>
             </button>
           )}
 
-          <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
+        {/*   <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
             <div className={`rounded-tl-2xl ${companyCommonStyles}`}>
               Reliability
             </div>
@@ -119,7 +119,7 @@ const Welcome = () => {
             <div className={`rounded-br-2xl ${companyCommonStyles}`}>
               Blockchain
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt-10">
@@ -136,7 +136,7 @@ const Welcome = () => {
                   {shortenAddress(currentAccount)}
                 </p>
                 <p className="text-white font-semibold text-lg mt-1">
-                  Smart Meter Address
+                  Wallet Address
                 </p>
               </div>
             </div>

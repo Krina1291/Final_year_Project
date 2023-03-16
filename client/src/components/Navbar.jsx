@@ -20,7 +20,7 @@ const Navbar = () => {
       </div>
 
       <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-        {["Market", "Exchange", "Tutorials", "Wallets"].map((item, index) => (
+        {["Market", "Exchange", "Trading", "Wallets"].map((item, index) => (
           <NavBarItem key={item + index} title={item} />
         ))}
 
@@ -33,7 +33,7 @@ const Navbar = () => {
           >
             <AiFillPlayCircle className="text-white mr-2" />
             <p className="text-white text-base font-semibold">
-              Connect Smart Meter
+              Connect Wallet
             </p>
           </button>
           // </li>
@@ -65,7 +65,7 @@ const Navbar = () => {
             <li className="text-xl w-full my-2">
               <AiOutlineClose onClick={() => setToggleMenu(false)} />
             </li>
-            {["Market", "Exchange", "Tutorials", "Wallets"].map(
+            {["Market", "Exchange", "Trading", "Wallets"].map(
               (item, index) => (
                 <NavBarItem
                   key={item + index}

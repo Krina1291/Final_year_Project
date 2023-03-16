@@ -53,23 +53,61 @@ export default function CustomizedTables() {
             </TableRow>
           </TableHead>
           <TableBody>
+          <TableRow>
+              <StyledTableCell>0x70997970C51812dc3A010C7d01b50e0d17dc79C8</StyledTableCell>
+              <StyledTableCell align="right">Account 6</StyledTableCell>
+              <StyledTableCell align="right">Surat Dist</StyledTableCell>
+              <StyledTableCell align="right">100</StyledTableCell>
+              <StyledTableCell align="right">12</StyledTableCell>
+              <StyledTableCell align="right">0.1</StyledTableCell>
+              <StyledTableCell align="right">00.00</StyledTableCell>
+            </TableRow>
+          <TableRow>
+              <StyledTableCell>0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc</StyledTableCell>
+              <StyledTableCell align="right">Account 5</StyledTableCell>
+              <StyledTableCell align="right">Surat Dist</StyledTableCell>
+              <StyledTableCell align="right">100000</StyledTableCell>
+              <StyledTableCell align="right">10</StyledTableCell>
+              <StyledTableCell align="right">0.1</StyledTableCell>
+              <StyledTableCell align="right">00.00</StyledTableCell>
+            </TableRow>
+            <TableRow>
+              <StyledTableCell>0x23618e81E3f5cdF7f54C3d65f7FBc0aBf5B21E8f</StyledTableCell>
+              <StyledTableCell align="right">Account 4</StyledTableCell>
+              <StyledTableCell align="right">Surat Dist</StyledTableCell>
+              <StyledTableCell align="right">10000</StyledTableCell>
+              <StyledTableCell align="right">100</StyledTableCell>
+              <StyledTableCell align="right">0.1</StyledTableCell>
+              <StyledTableCell align="right">00.00</StyledTableCell>
+            </TableRow>
+            <TableRow>
+              <StyledTableCell>0xFABB0ac9d68B0B445fB7357272Ff202C5651694a</StyledTableCell>
+              <StyledTableCell align="right">Account 3</StyledTableCell>
+              <StyledTableCell align="right">Surat Dist</StyledTableCell>
+              <StyledTableCell align="right">100000</StyledTableCell>
+              <StyledTableCell align="right">5</StyledTableCell>
+              <StyledTableCell align="right">0.1</StyledTableCell>
+              <StyledTableCell align="right">00.00</StyledTableCell>
+            </TableRow>
+            
+            
             {availableOptions?.map((row) => (
               <StyledTableRow key={row.id}>
                 <StyledTableCell component="th" scope="row">
-                  {row.sender}
+                {row.sender} 
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  {row.powerSource}
+                {row.powerSource}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  {row.amountOfPower}
+                {row.amountOfPower} 
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  {row.pricePerKW}
+                {row.pricePerKW}
                 </StyledTableCell>
                 <StyledTableCell align="right">{row.duration}</StyledTableCell>
                 <StyledTableCell align="right">
-                  {row.timeToStart}
+                {row.timeToStart}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
