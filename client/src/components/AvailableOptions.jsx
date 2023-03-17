@@ -12,8 +12,8 @@ import { TransactionContext } from "../context/TransactionContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    //backgroundColor: theme.palette.common.black,
+   // color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -34,15 +34,18 @@ export default function CustomizedTables() {
   const { allTransactions, availableOptions } =
     React.useContext(TransactionContext);
 
-  // console.log(allTransactions);
-
+  // console.log(allTransactions); border-white flex justify-center items-center
+  //dummy data values
   return (
-    <Container>
+    <Container className="border-white flex justify-center items-center">
+      <h1 className="flex text-3xl sm:text-5xl text-white">Available Options</h1>
+      <br/>
       <TableContainer component={Paper}>
-        <h1>Available Options</h1>
+        {/*<h1>Available Options</h1>
+        <h1 className="text-3xl sm:text-5xl">Available Options</h1>*/}
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
-            <TableRow>
+            <TableRow className="bg-gray-400">
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell align="right">Sender</StyledTableCell>
               <StyledTableCell align="right">Power Source</StyledTableCell>
@@ -114,11 +117,13 @@ export default function CustomizedTables() {
           </TableBody>
         </Table>
       </TableContainer>
-
+      <br/>       
+      <h1 className="flex text-3xl sm:text-5xl text-white">Transactions</h1>
+      <br/>
       <TableContainer component={Paper}>
-        <h1>TRANSACTIONS</h1>
+        {/*<h1>TRANSACTIONS</h1>*/}
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
+          <TableHead className="bg-gray-400">
             <TableRow>
               <StyledTableCell>Sender</StyledTableCell>
               <StyledTableCell align="right">Receiver</StyledTableCell>
