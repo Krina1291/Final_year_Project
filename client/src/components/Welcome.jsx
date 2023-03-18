@@ -104,6 +104,26 @@ const Welcome = () => {
               </p>
             </button>
           )}
+{/*<div className="p-3 flex justify-end items-start flex-col rounded-xl h-40 sm:w-72 w-full my-5 eth-card .white-glassmorphism ">*/}
+<div className="p-3 flex justify-end items-start flex-col rounded-xl h-40 sm:w-72 w-full my-5 eth-card .white-glassmorphism ">
+            <div className="flex justify-between flex-col w-full h-full">
+              <div className="flex justify-between items-start">
+                <div className="w-10 h-10 rounded-full border-2 border-white flex justify-center items-center">
+                  <SiEthereum fontSize={21} color="#fff" />
+                </div>
+                <BsInfoCircle fontSize={17} color="#fff" />
+              </div>
+              <div>
+                <p className="text-white font-light text-sm">
+                  {shortenAddress(currentAccount)}
+                </p>
+                <p className="text-white font-semibold text-lg mt-1">
+                  Wallet Address
+                </p>
+              </div>
+            </div>
+</div>
+
 
         {/*   <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
             <div className={`rounded-tl-2xl ${companyCommonStyles}`}>
@@ -123,8 +143,10 @@ const Welcome = () => {
           </div> */}
         </div>
 
+          
+
         <div className="flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt-10">
-          <div className="p-3 flex justify-end items-start flex-col rounded-xl h-40 sm:w-72 w-full my-5 eth-card .white-glassmorphism ">
+          {/*<div className="p-3 flex justify-end items-start flex-col rounded-xl h-40 sm:w-72 w-full my-5 eth-card .white-glassmorphism ">
             <div className="flex justify-between flex-col w-full h-full">
               <div className="flex justify-between items-start">
                 <div className="w-10 h-10 rounded-full border-2 border-white flex justify-center items-center">
@@ -142,8 +164,8 @@ const Welcome = () => {
               </div>
             </div>
           </div>
-
-          <div className="sm:w-98 w-full flex flex-row justify-between items-start">
+        */}
+          <div className="text-black sm:w-98 w-full flex flex-row justify-between items-start ">
             {/*sell energy form */}
             <form
               onSubmit={handleAddToAvailableOptions}
@@ -155,7 +177,7 @@ const Welcome = () => {
                 type="text"
                 onChange={(e) => handleAddToAvailablePowerChange(e)}
                 required
-                className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+                className="text-black my-2 w-full rounded-sm p-2 outline-none border-none text-sm white-glassmorphism"
               />
 
               <input
@@ -165,7 +187,7 @@ const Welcome = () => {
                 type="number"
                 required
                 onChange={(e) => handleAddToAvailablePowerChange(e)}
-                className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+                className="my-2 w-full rounded-sm p-2 outline-none text-black border-none text-sm white-glassmorphism"
               />
 
               <input
@@ -175,7 +197,7 @@ const Welcome = () => {
                 type="number"
                 required
                 onChange={(e) => handleAddToAvailablePowerChange(e)}
-                className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+                className="my-2 w-full rounded-sm p-2 outline-none  text-black border-none text-sm white-glassmorphism"
               />
 
               <input
@@ -184,7 +206,7 @@ const Welcome = () => {
                 type="time"
                 required
                 onChange={(e) => handleAddToAvailablePowerChange(e)}
-                className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+                className="my-2 w-full rounded-sm p-2 outline-none  text-black border-none text-sm white-glassmorphism"
               />
 
               <input
@@ -193,20 +215,21 @@ const Welcome = () => {
                 type="text"
                 required
                 onChange={(e) => handleAddToAvailablePowerChange(e)}
-                className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+                className="my-2 w-full rounded-sm p-2 outline-none  text-black border-none text-sm white-glassmorphism"
               />
 
               <div className="h-[1px] w-full bg-gray-400 my-2" />
 
               {isLoading ? (
-                <h6 className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer">
+                <h6 className="text-white w-full mt-2 border-[1px] p-2 border-[#3d6657] hover:bg-[#3d6657] rounded-full cursor-pointer">
                   Loading
                 </h6>
               ) : (
                 <button
                   type="submit"
-                  onClick={handleAddToAvailableOptions}
-                  className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
+                  onClick={handleAddToAvailableOptions} 
+                  /*#3d4f7c */
+                  className="text-black w-full mt-2 border-[1px] p-2 border-[#3d6657] hover:bg-[#3d6657] rounded-full cursor-pointer"
                 >
                   Sell Energy
                 </button>
@@ -222,7 +245,7 @@ const Welcome = () => {
                 name="id"
                 type="text"
                 onChange={(e) => handleBuyAvailablePowerChange(e)}
-                className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+                className="my-2 w-full rounded-sm p-2 outline-none  text-white border-none text-sm white-glassmorphism"
               />
 
               <input
@@ -230,7 +253,7 @@ const Welcome = () => {
                 name="amountOfPower"
                 type="number"
                 onChange={(e) => handleBuyAvailablePowerChange(e)}
-                className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+                className="my-2 w-full rounded-sm p-2 outline-none text-white border-none text-sm white-glassmorphism"
               />
 
               <input
@@ -238,20 +261,20 @@ const Welcome = () => {
                 name="receiverAddress"
                 type="text"
                 onChange={(e) => handleBuyAvailablePowerChange(e)}
-                className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+                className="text-black my-2 w-full rounded-sm p-2 outline-none  border-none text-sm white-glassmorphism"
               />
 
               <div className="h-[1px] w-full bg-gray-400 my-2" />
 
               {isLoading ? (
-                <h6 className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer">
+                <h6 className="text-black w-full mt-2 border-[1px] p-2 border-[#3d6657] hover:bg-[#3d6657] rounded-full cursor-pointer">
                   Loading
                 </h6>
               ) : (
                 <button
                   type="submit"
                   onClick={handleBuyPower}
-                  className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
+                  className="text-black w-full mt-2 border-[1px] p-2 border-[#3d6657] hover:bg-[#3d6657] rounded-full cursor-pointer"
                 >
                   Purchase Energy
                 </button>
