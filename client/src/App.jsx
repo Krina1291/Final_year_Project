@@ -4,14 +4,14 @@ import { Navbar, Welcome, Footer, Services, Transactions,AvailableOptions } from
 const App = () => (
   <div className="min-h-screen">
     <div className="gradient-bg-welcome">
-      <Navbar />
+     {/* <Navbar />*/}
       <Welcome />
       <AvailableOptions />
     </div>
     <Services />
     {/* <Transactions /> */}
     {/*<CustomizedTables />*/}
-    <Footer />
+    {/*<Footer />*/}
   </div>
 );
 
